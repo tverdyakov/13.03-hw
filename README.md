@@ -24,28 +24,37 @@
 
 Проведите разведку системы и определите, какие сетевые службы запущены на защищаемой системе:
 
-**sudo nmap -sA 192.168.123.111**
+**sudo nmap -sA 192.168.123.111** 
+
+Suricata не реагирует на это сканирование.
 ![png](https://github.com/tverdyakov/13.03-hw/blob/main/screenshots/Задание%201.1.png)
 ![png](https://github.com/tverdyakov/13.03-hw/blob/main/screenshots/Задание%201.2.png)
 
 **sudo nmap -sT 192.168.123.111**
+
+Suricata определяет подозрительный входящий трафик на порты: 3306 MySQL, 1433 MSSQL, 5432 PostgreSQL, 1521 Oracle SQL, и классифицирует его как "Потенциально опасный трафик" со средним приоритетом. И потенциальное сканирование VNC 5900-5920 с классификацией "Попытка утечки информации" со средним приоритетом.
 ![png](https://github.com/tverdyakov/13.03-hw/blob/main/screenshots/Задание%201.3.png)
 ![png](https://github.com/tverdyakov/13.03-hw/blob/main/screenshots/Задание%201.4.png)
 
 **sudo nmap -sS 192.168.123.111**
+
+Suricata определяет тоже, что и при сканировании nmap -sT. Различия только в портах атакующего хоста и порте атакуемого хоста при потенциальном сканирование VNC 5900-5920.
 ![png](https://github.com/tverdyakov/13.03-hw/blob/main/screenshots/Задание%201.5.png)
 ![png](https://github.com/tverdyakov/13.03-hw/blob/main/screenshots/Задание%201.6.png)
 
 **sudo nmap -sV 192.168.123.111**
+
+Suricata, помимо похожей информации при сканировании nmap -sT и nmap -sS, обнаруживает пользовательский агент скриптового движка Nmap (Nmap Scripting Engine) с классификацией "Атака веб-приложений" и высоким приоритетом.
 ![png](https://github.com/tverdyakov/13.03-hw/blob/main/screenshots/Задание%201.7.png)
 ![png](https://github.com/tverdyakov/13.03-hw/blob/main/screenshots/Задание%201.8.png)
 
 #### Fail2Ban 
+
+Fail2Ban никак не отреагировал. Но, при последнем сканировании, в логах операционной системы появилась информация об ошибке и закрытии соединения атакующим хостом.
 ![png](https://github.com/tverdyakov/13.03-hw/blob/main/screenshots/Задание%201.9.png)
 ![png](https://github.com/tverdyakov/13.03-hw/blob/main/screenshots/Задание%201.10.png)
 
 По желанию можете поэкспериментировать с опциями: https://nmap.org/man/ru/man-briefoptions.html.
-
 
 *В качестве ответа пришлите события, которые попали в логи Suricata и Fail2Ban, прокомментируйте результат.*
 
